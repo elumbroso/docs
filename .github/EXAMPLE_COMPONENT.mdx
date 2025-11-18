@@ -1,0 +1,213 @@
+---
+title: Figma Sync Example Component
+description: Example component showing how to use the Figma sync system
+---
+
+# Figma Sync Example
+
+This file demonstrates how to use the Figma sync workflow. Follow the pattern below for your own components.
+
+## Step 1: Add the Figma Frame Comment
+
+After your frontmatter, add this comment with your Figma file ID and node ID:
+
+```mdx
+<!-- figma-frame: FILE_ID/NODE_ID -->
+```
+
+Replace:
+- `FILE_ID` with your Figma file ID
+- `NODE_ID` with your Figma node/frame ID
+
+## Step 2: Write Your Component Documentation
+
+Add your normal documentation content below the comment. The sync workflow won't interfere with it.
+
+```mdx
+## Overview
+
+Describe what your component does...
+
+## Usage
+
+Show how to use the component...
+
+## Variants
+
+List available variants...
+```
+
+## Step 3: Let the Sync Add Specifications
+
+The workflow will automatically:
+1. Add a `<!-- figma-screenshot -->` marker
+2. Export a 2x PNG screenshot to `figma-screenshots/`
+3. Extract and insert design specifications
+4. Create a pull request with all changes
+
+## Example with Placeholder IDs
+
+Here's what a complete component documentation looks like:
+
+```markdown
+---
+title: Button Component
+description: Primary action button
+---
+
+<!-- figma-frame: h8Ugks6YufraLCbPxOkgxb/1-11 -->
+
+## Overview
+
+The Button component is a reusable interactive element for triggering actions.
+
+## When to Use
+
+- Trigger primary actions
+- Submit forms
+- Navigate to pages
+
+## Variants
+
+- Primary (default)
+- Secondary
+- Disabled
+
+## Implementation
+
+Use this component throughout your app for consistent styling.
+
+---
+
+## Figma Specifications
+<!-- figma-specs-start -->
+
+### Size
+
+- **Width**: 120px
+- **Height**: 48px
+
+### Colors
+
+| Type | Color | Opacity |
+|------|-------|---------|
+| fill | #0A44A0 | 100% |
+| text | #FFFFFF | 100% |
+
+### Typography
+
+| Property | Value |
+|----------|-------|
+| Font Family | Inter |
+| Font Size | 14px |
+| Font Weight | 500 |
+
+<!-- figma-specs-end -->
+```
+
+## Tips
+
+### Finding Your FILE_ID and NODE_ID
+
+1. **FILE_ID**: In your Figma file URL
+   ```
+   https://www.figma.com/file/[FILE_ID]/FileName
+                           ^^^^^^^^
+   ```
+
+2. **NODE_ID**: Select a frame/component, then look at URL
+   ```
+   https://www.figma.com/file/FILE_ID/FileName?node-id=[NODE_ID]
+                                                       ^^^^^^^
+   ```
+
+### Multiple Frames per File
+
+You can track multiple Figma frames in one `.mdx` file:
+
+```mdx
+---
+title: Form Components
+---
+
+## Text Input
+
+<!-- figma-frame: FILE_ID/NODE_ID_1 -->
+
+Text input documentation...
+
+## Checkbox
+
+<!-- figma-frame: FILE_ID/NODE_ID_2 -->
+
+Checkbox documentation...
+```
+
+### Screenshot Organization
+
+Screenshots are automatically saved to:
+```
+components/figma-screenshots/NODE_ID-@2x.png
+           ^^^^^^^^^^^^^^^^^^
+           (relative to the .mdx file location)
+```
+
+## What Gets Synced
+
+✅ **Screenshots**
+- Exported at 2x scale (retina quality)
+- Saved as PNG files
+
+✅ **Specifications**
+- Frame dimensions (width, height)
+- Fill colors (with opacity)
+- Stroke colors (with opacity)
+- Typography (font, size, weight, line height)
+
+✅ **Comments**
+- Automatically placed in your .mdx file
+- Marked with special comment blocks
+- Safe to edit around
+
+## Workflow Status
+
+Check the status of your sync:
+
+1. Go to **Actions** tab on GitHub
+2. Look for "Sync Figma Screenshots and Specs"
+3. Click on latest run to see logs
+4. Check for pull requests titled "chore: sync Figma updates"
+
+## Scheduling
+
+- **Default**: Every Monday at 9 AM UTC
+- **Manual**: Anytime from Actions → Run workflow
+- **Edit schedule**: Modify `.github/workflows/sync-figma.yml`
+
+## Troubleshooting
+
+### Workflow won't start
+- Ensure `FIGMA_API_TOKEN` is added to GitHub Secrets
+- Check token has "File read" scope
+
+### Frames not detected
+- Verify comment format: `<!-- figma-frame: FILE_ID/NODE_ID -->`
+- Check that FILE_ID and NODE_ID are correct
+- Verify file/node still exists in Figma
+
+### Specifications not extracted
+- Some properties may not be available in Figma API
+- Complex nested components may extract partial specs
+- Review the PR for what was extracted
+
+## Next Steps
+
+1. Add this pattern to your `.mdx` files
+2. Replace FILE_ID and NODE_ID with your Figma details
+3. Run the workflow from Actions tab
+4. Review the generated PR
+5. Merge to publish your synced documentation
+
+---
+
+For full documentation, see: `.github/FIGMA_SYNC_README.md`

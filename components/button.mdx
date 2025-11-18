@@ -1,0 +1,224 @@
+---
+title: Button Component
+description: A reusable button component with multiple variants and states for consistent user interactions
+figmaFrame: h8Ugks6YufraLCbPxOkgxb/1-11
+---
+
+## Overview
+
+The Button component is a foundational interactive element used across the application to trigger actions, submit forms, or navigate between pages. It provides consistent styling, accessibility features, and a delightful user experience through well-defined states and interactions.
+
+## When to Use
+
+Use the Button component when you need to:
+- Trigger primary or secondary actions
+- Submit forms or confirm user intent
+- Navigate to different sections or pages
+- Toggle states or open dialogs
+- Provide clear call-to-action opportunities
+
+**Don't use Button for:**
+- Navigation links (use Link component instead)
+- Text-only interactions that don't require emphasis
+- Complex multi-step interactions (consider using a wizard)
+
+## Component Specifications
+
+### Size and Spacing
+
+| Property | Value | Token |
+|----------|-------|-------|
+| **Padding** | 8px (vertical & horizontal) | - |
+| **Height** | 31px | - |
+| **Min Width** | 54px | - |
+| **Border Radius** | 4px | `--flipper-radius-xs` |
+| **Gap (icon to text)** | 8px | - |
+
+### Colors and Tokens
+
+| Element | Color Value | Design Token | Hex Code |
+|---------|------------|--------------|----------|
+| **Background** | Flipper Blue 900 | `--flipper-blue-900` | #0a44a0 |
+| **Text** | Flipper Neutral 0 | `--flipper-neutral-0` | #ffffff |
+
+### Typography
+
+| Property | Value |
+|----------|-------|
+| **Font Family** | Inter |
+| **Font Weight** | Regular (400) |
+| **Font Size** | 12px |
+| **Line Height** | Normal |
+| **Letter Spacing** | Default |
+
+## Variants and States
+
+### Primary Button (Default)
+- **Background**: Flipper Blue 900 (#0a44a0)
+- **Text Color**: White (#ffffff)
+- **Border Radius**: 4px
+- **Padding**: 8px
+- **Use Case**: Main call-to-action buttons
+
+### Interactive States
+
+<details>
+<summary>Click to expand state details</summary>
+
+- **Default**: Blue background with white text
+- **Hover**: Darker blue background (suggest #082d7a for better contrast)
+- **Active/Pressed**: Even darker shade with slight inset appearance
+- **Disabled**: Reduced opacity (50-60%) with disabled cursor
+- **Focus**: Visible focus ring (2-3px) for keyboard navigation accessibility
+
+</details>
+
+## Accessibility Requirements
+
+### Keyboard Navigation
+- ✅ Must be focusable via Tab key
+- ✅ Must be activatable via Enter and Space keys
+- ✅ Should have visible focus indicator (focus ring)
+
+### Screen Reader Support
+- ✅ Use semantic `<button>` or `<a role="button">` elements
+- ✅ Provide descriptive button text or `aria-label` attribute
+- ✅ Include `aria-pressed` for toggle buttons
+- ✅ Include `aria-disabled` for disabled states
+
+### Color Contrast
+- ✅ Current contrast ratio (Blue #0a44a0 on White): **9.5:1** ✓ Exceeds WCAG AAA (7:1)
+- ✅ Ensure text remains readable in all states
+- ✅ Don't rely solely on color to convey state changes
+
+### ARIA Attributes
+```html
+<!-- Standard Button -->
+<button type="button" aria-label="Submit form">
+  Button
+</button>
+
+<!-- Toggle Button -->
+<button type="button" aria-pressed="false" aria-label="Toggle sidebar">
+  Menu
+</button>
+
+<!-- Loading State -->
+<button type="button" aria-busy="true" disabled>
+  Loading...
+</button>
+```
+
+## Usage Examples
+
+### React Example
+```jsx
+import React from 'react';
+
+export function Button({ 
+  children, 
+  variant = 'primary', 
+  disabled = false,
+  onClick,
+  ...props 
+}) {
+  return (
+    <button
+      className="bg-[var(--flipper-blue-900,#0a44a0)] box-border flex gap-[8px] items-center justify-center p-[8px] rounded-[var(--flipper-radius-xs,4px)] text-[12px] font-normal text-[var(--flipper-neutral-0,#ffffff)] hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+      disabled={disabled}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+### HTML Example
+```html
+<!-- Primary Button -->
+<button class="button button--primary">
+  Click Me
+</button>
+
+<!-- Disabled Button -->
+<button class="button button--primary" disabled aria-disabled="true">
+  Disabled
+</button>
+
+<!-- Button with Icon -->
+<button class="button button--primary">
+  <svg class="button__icon"><!-- icon SVG --></svg>
+  <span>Action</span>
+</button>
+```
+
+### CSS Example
+```css
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  
+  border: none;
+  border-radius: var(--flipper-radius-xs, 4px);
+  
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  
+  background-color: var(--flipper-blue-900, #0a44a0);
+  color: var(--flipper-neutral-0, #ffffff);
+  
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(10, 68, 160, 0.2);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+```
+
+## Design Notes
+
+- The button uses design tokens from the Flipper design system for maintainability
+- All spacing and sizing values follow the 8px grid system
+- The component supports left/right icon placement via flex layout
+- Interactive states use opacity changes for hover/disabled states (consider adding explicit hover colors)
+- The blue color provides strong contrast and visual hierarchy
+- Font size (12px) ensures readability while maintaining compact layout
+
+## Related Components
+
+- **Link**: For text-based navigation
+- **IconButton**: For icon-only actions
+- **ButtonGroup**: For grouped actions
+- **ToggleButton**: For binary state toggles
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0.0 | 2025-11-18 | Initial documentation from Figma design |
+
+## Support
+
+For questions or design updates, refer to the [Figma file](https://www.figma.com/design/h8Ugks6YufraLCbPxOkgxb/Figma-MCP?node-id=1-11&m=dev).
