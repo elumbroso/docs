@@ -45,6 +45,13 @@
               "ai-tools/windsurf"
             ]
           }
+          ,
+          {
+            "group": "Components",
+            "pages": [
+              "components/button"
+            ]
+          }
         ]
       },
       {
