@@ -6,7 +6,14 @@
   "scripts": {
     "sync:figma": "node .github/scripts/sync-figma.js"
   },
-  "keywords": ["documentation", "figma", "sync"],
+  "keywords": [
+    "documentation",
+    "figma",
+    "sync"
+  ],
   "author": "Erwan Lumbroso",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.34.5"
+  }
 }

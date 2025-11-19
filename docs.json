@@ -45,6 +45,15 @@
               "ai-tools/windsurf"
             ]
           }
+          ,
+          {
+            "group": "Components",
+            "pages": [
+              "components/button",
+              "figma-extracted/overview",
+              "figma-extracted/components-variants"
+            ]
+          }
         ]
       },
       {
