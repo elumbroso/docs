@@ -49,7 +49,9 @@
           {
             "group": "Components",
             "pages": [
-              "components/button"
+              "components/button",
+              "figma-extracted/overview",
+              "figma-extracted/components-variants"
             ]
           }
         ]
